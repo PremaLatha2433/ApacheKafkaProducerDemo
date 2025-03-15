@@ -1,13 +1,11 @@
 package com.apache.kafka.controller;
 
+import com.apache.kafka.pojo.Customer;
 import com.apache.kafka.services.KafkaMessagePublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/producer-app")
@@ -23,6 +21,15 @@ public class EventController {
             for(int i=0;i<10000;i++) {
                 kafkaMessagePublisher.sendMessageToTopic(message+":"+i);
             }
+            return new ResponseEntity<>("message published sucessfully..", HttpStatus.OK);
+        }catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @PostMapping("/publish")
+    public ResponseEntity<?> publishMessage(@RequestBody Customer customer){
+        try {
+                kafkaMessagePublisher.sendMessageObjectToTopic(customer);
             return new ResponseEntity<>("message published sucessfully..", HttpStatus.OK);
         }catch (Exception e){
             return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

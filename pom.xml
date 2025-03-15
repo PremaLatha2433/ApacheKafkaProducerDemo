@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.demo.kafka</groupId>
-    <artifactId>KafkaDemo</artifactId>
+    <artifactId>KafkaProducerDemo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
