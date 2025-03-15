@@ -1,6 +1,7 @@
 package com.apache.kafka.services;
 
 import com.apache.kafka.pojo.Customer;
+import com.apache.kafka.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -33,6 +34,23 @@ public class KafkaMessagePublisher {
                     System.out.println("sent message=[" + customer + " ] with offset =[" + result.getRecordMetadata().offset() + "]");
                 } else {
                     System.out.println("Unable to send message =[" + customer + "] due to : " + ex.getMessage());
+                }
+            });
+        }catch (Exception e){
+            System.out.println("Unable to send message");
+        }
+    }
+    public void sendUserMessage(User user)
+    {
+        try {
+            CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.
+                    send("beHappyPremaLatha-2",user);
+
+            future.whenComplete((result, ex) -> {
+                if (ex == null) {
+                    System.out.println("sent message=[" + user + " ] with offset =[" + result.getRecordMetadata().offset() + "]");
+                } else {
+                    System.out.println("Unable to send message =[" + user + "] due to : " + ex.getMessage());
                 }
             });
         }catch (Exception e){

@@ -21,6 +21,10 @@ public class KafkaProducerConfig {
     public NewTopic createTopic(){
         return new NewTopic("beHappyPremaLatha-1",3, (short) 1);
     }
+    @Bean
+    public NewTopic createTopic2(){
+        return new NewTopic("beHappyPremaLatha-2",5, (short) 1);
+    }
 
     @Bean
     public Map<String,Object> producerConfig(){

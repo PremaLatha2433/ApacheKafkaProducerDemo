@@ -1,6 +1,7 @@
 package com.apache.kafka.controller;
 
 import com.apache.kafka.pojo.Customer;
+import com.apache.kafka.pojo.User;
 import com.apache.kafka.services.KafkaMessagePublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,15 @@ public class EventController {
     public ResponseEntity<?> publishMessage(@RequestBody Customer customer){
         try {
                 kafkaMessagePublisher.sendMessageObjectToTopic(customer);
+            return new ResponseEntity<>("message published sucessfully..", HttpStatus.OK);
+        }catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @PostMapping("/publishUser")
+    public ResponseEntity<?> publishUser(@RequestBody User user){
+        try {
+            kafkaMessagePublisher.sendUserMessage(user);
             return new ResponseEntity<>("message published sucessfully..", HttpStatus.OK);
         }catch (Exception e){
             return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
